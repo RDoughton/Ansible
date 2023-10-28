@@ -2,7 +2,7 @@
 ## Playbook to update packages on Ubuntu and reboot server if needed.
 ## ansible-playbook ubuntu-update-reboot.yml
 
-- hosts: Ubuntu
+- hosts: Ubuntu_Servers
   tasks:
   - name: Update all Ubuntu packages.  
     apt:
