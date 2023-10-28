@@ -1,0 +1,27 @@
+---
+## Playbook to update packages on Ubuntu and reboot server if needed.
+## ansible-playbook ubuntu-update-reboot.yml
+
+- hosts: Reboot
+  tasks:
+  - name: Update all Ubuntu packages.  
+    apt:
+      update_cache: yes
+      upgrade: 'yes'
+    become: true
+
+  - name: Remove dependencies that are no longer required.
+    become: true
+    ansible.builtin.apt:
+      autoremove: yes
+
+  - name: Check if a reboot is required.
+    ansible.builtin.stat:
+      path: /var/run/reboot-required
+      get_md5: no
+    register: reboot_required_file
+
+  - name: Reboot the server (if required).
+    become: true
+    ansible.builtin.reboot:
+    when: reboot_required_file.stat.exists == true
