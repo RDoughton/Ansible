@@ -1,0 +1,11 @@
+---
+## Playbook to set timezone to America/New_York
+## ansible-playbook set-timezone.yml
+
+- hosts: all
+  tasks:
+
+  - name: Set timezone to America/New_York
+    become: true
+    community.general.timezone:
+      name: America/New_York
